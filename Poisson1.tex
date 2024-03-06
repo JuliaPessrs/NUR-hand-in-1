@@ -1,0 +1,9 @@
+\section{Poisson distribution}
+
+In this section question 1 subquestion a will be discussed. The question was to write a function that returns the Poisson distribution for integer k. In the Poisson distribution one divides by the factorial of k. This factorial can become very large for high numbers of k. This leads to an overflow problem. To prevent this the factorial and Poisson distribution will be calculated in log space for high values of k. As final step the outcome will then be transformed back. To avoid high memory usage we use numpy.float32. \\
+
+The script is given by:
+\lstinputlisting{PoissonDistribution.py}
+
+The result of the script is given by:
+\lstinputlisting{Poisson_output.txt}
