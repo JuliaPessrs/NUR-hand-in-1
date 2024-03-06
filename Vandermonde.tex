@@ -1,0 +1,58 @@
+\section{Vandermonde matrix}
+
+\subsection{LU decomposition}
+
+In this section question 2 subquestion a will be discussed. The question was to write a code that does an LU decomposition of the Vandermonde matrix and solve for c. First the given x values are transformed into an 20 x 20 Vandermonde matrix. Next, this matrix is transformed into an LU matrix following the steps discussed in lecture 3. After which, this LU matrix is split into two separate L and U matrices. Finally, forward substitution is applied on the L matrix and the input y values. Followed by, backwards substitution on the outcome with the U matrix. This solves for the c values, where Vc = y. Lastly, a plot of the full 19th-degree polynomial evaluated at 1000 equally-spaced points is made. Also, the absolute difference between the given points and the calculated results are plotted. For this plot see \ref{fig:2a}. \\
+
+The script is given by:
+\lstinputlisting{VandermondeMatrixA.py}
+
+The determined c values are given by:
+\lstinputlisting{Vandermode_a_output.txt}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{my_vandermonde_sol_2a.png}
+  \caption{This figure shows that the full 19th-degree polynomial goes through all the data points. The polynomial evaluates the middle data points well. However, at the beginning and especially at the end, the polynomial deviates from the data points. This is not unexpected as using high-degree polynomials to interpolate data is known to lead to oscillations. Furthermore, it leads to larger errors. This is also visible in the figure.}
+  \label{fig:2a}
+\end{figure}
+
+\subsection{Neville's algorithm}
+
+In this section question 2 subquestion b will be discussed. The question was to write a code that applies Neville's algorithm to all 20 points, meaning M = 20, and to find 1000 interpolated values for the full Lagrange polynomial. To start a bisection algorithm is needed, which returns the value jlow. After which, Neville's algorithm returns the interpolated points following the steps discussed in lecture 2. My code is more extensive then necessary for this question. I had written this algorithm for the second tutorial, where we did not want to apply the Lagrange polynomial to all 20 points. This meant that a bisection algorithm is needed to determine from which data point to start. However, as we in this case use all data points this is no longer necessary. For completeness I did include these parts in my code, even though I understand that in this case they are not needed. For the plot of the full Lagrange polynomial see \ref{fig:2b}.\\ 
+
+The script is given by:
+\lstinputlisting{VandermondeMatrixB.py}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{my_vandermonde_sol_2b.png}
+  \caption{This figure shows that the Lagrange polynomial lies on top of the full 19th-degree polynomial using the LU decomposition. This is what we would expect as we know that the 19th-degree polynomial must be equal to the Lagrange polynomial. However, the absolute difference between the given data and the results is smaller for the Lagrange polynomial. This can be explained as Neville's algorithm is asked to interpolate on the exact given data points.}
+  \label{fig:2b}
+\end{figure}
+
+\subsection{Iterating}
+
+In this section question 2 subquestion c will be discussed. The question was to improve the results for a by iterating on the solution. One iteration is one application of the error-cancelling algorithm discussed in lecture 3. The results are iterated once and ten times. For the plot of the full 19th-degree polynomial after iterating see \ref{fig:2c}. \\
+
+The script is given by:
+\lstinputlisting{VandermondeMatrixC.py}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{my_vandermonde_sol_2c.png}
+  \caption{This figure shows that iterating on the solution doesn't visually change the polynomial. However, it does have effect on the error. The figure shows that iterating on the solution results in a smoother error function. }
+  \label{fig:2c}
+\end{figure}
+
+\subsection{Execution times}
+
+In this section question 2 subquestion d will be discussed. The question was to use timeit to time the execution times of a, b and c (with 10 iterations). As timeit’s number parameter I chose 200. I chose this number because we get accurate run time estimates without taking more than a minute to execute. The determined execution times show that the LU decomposition method is fastest. Even when iterating over the result 10 times, this method is still faster than using Neville's algorithm. As I already mentioned, my Neville's algorithm is more extensive than necessary in this case. The bisection algorithm is in this case not essential and can be left out. However, even without this part the method using Neville's algorithm will take significantly more time. This is mainly due to the higher number of multiplications and divisions in this approach. Neville's algorithm has a double loop and for each steps it does two multiplications and one division. The LU decomposition also has multiplications and divisions, however this occurs less frequent. Therefore, the LU decomposition method is more time efficient compared to the Neville's algorithm method. Unsurprisingly, iterating 10 times over the result increases the execution time. However, as only the forward and backward substitution steps are repeated and not the entire algorithm, it doesn't increase the execution time too much. \\
+
+\noindent The method with Neville's algorithm yields a more accurate than the LU decomposition method. This is also what we would expect as it automatically iterates over the results, decreasing the error. Thus, it yields more accurate results. 
+
+The script is given by:
+\lstinputlisting{VandermondeMatrixD.py}
+
+The determined execution times are given by:
+\lstinputlisting{Vandermode_d_output.txt}
